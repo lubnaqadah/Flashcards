@@ -5,15 +5,15 @@ var result = 0;
 
 
 var sports= new Deck('Sports');
-sports.addCard('Who was the team to win most world cup title in history?', 'brazil');
-sports.addCard('Who was the team to win most champions league title in history?', 'real madrid');
+sports.addCard('Who was the team to win the most world cup titles in history?', 'brazil');
+sports.addCard('Who was the team to win the most champions league titles in history?', 'real madrid');
 
 var history = new Deck('History');
 history.addCard('World War I began in which year?', '1914');
 history.addCard('In what year did a Wall Street crash start the "Great Depression"?', '1929');
 
 
-
+//listing the decks to the user 
 function start(){
 	inquirer.prompt([
 		{
@@ -30,187 +30,188 @@ function start(){
 				sport();
 				break;
 			case "history":
-				history()
+				historyFun()
 				break;
-						  });
+						  };
 
-	};
+	});}
 
-			function sport(){
-		if (counter < sports.cards.length){
-			counter++
-			inquirer.prompt([
-				{
-					name: "list",
-					type: "list",
-					choices:["Answer the question", "Flip the card","Exit"],
-					message:'The Question is: ' + sports.cards[counter].keyword + ' Would you like to...'
-				}
-			]).then(function(res){
-				console.log(counter);
-				if (res.list == "Answer the question"){
-					inquirer.prompt([
-						{
-							name: "answer",
-							type: "input",
-							message:'Please type in your answer'
-						}
-					]).then(function(res){
+//function to handle the first deck and it's choices
+function sport(){
+	counter++
 
-						var a = res.answer.toString().toLowerCase();
+	if (counter < sports.cards.length){
+		inquirer.prompt([
+			{
+				name: "list",
+				type: "list",
+				choices:["Answer the question", "Flip the card","Exit"],
+				message:'The Question is: ' + sports.cards[counter].keyword + ' Would you like to...'
+			}
+		]).then(function(res){
+			if (res.list == "Answer the question"){
+				inquirer.prompt([
+					{
+						name: "answer",
+						type: "input",
+						message:'Please type in your answer'
+					}
+				]).then(function(res){
 
-						if(a === sports.cards[counter].answer){	
+					var a = res.answer.toString().toLowerCase();
 
-							console.log('-------')
-							console.log("That's right!!");
-							result++
-							console.log('The result: ' + result);
-							console.log('-------');
-							setTimeout(sport, 1000);
+					if(a === sports.cards[counter].answer){	
 
-						}else{
-							inquirer.prompt([
-								{
-									name: "list",
-									type: "list",
-									choices:["Next Card", "Exit"],
-									message:'The answer was ' + sports.cards[counter].answer + ' Would you like to...'
+						console.log('-------')
+						console.log("That's right!!");
+						result++
+						console.log('The result: ' + result);
+						console.log('-------');
+						setTimeout(sport, 1000);
 
-								}
-							]).then(function(res){
-								if (res.answer == 'Exit'){
-									console.log('-------')
-									console.log("Goodbye")
-									console.log('-------')
-								}else{
-									sport();
-								}
-							})
-						}
-					})
-				}else if(res.list == "Flip the card"){
+					}else{
+						inquirer.prompt([
+							{
+								name: "list",
+								type: "list",
+								choices:["Next Card", "Exit"],
+								message:'The answer was ' + sports.cards[counter].answer + ' Would you like to...'
 
-					console.log('-------')
-					console.log(sports.cards[counter].answer);
-					console.log('-------')
-					inquirer.prompt([
-						{
-							name: "list",
-							type: "list",
-							choices:["Next Card", "Exit"],
-							message:'The Question is: ' + sports.cards[counter].keyword + ' Would you like to...'
-						}
-					]).then(function(res){
-						if (res.answer == 'Exit'){
-							console.log("Goodbye")
-						}else{
-							sport();
-						}
-					})
+							}
+						]).then(function(res){
+							if (res.answer == 'Exit'){
+								console.log('-------')
+								console.log("Goodbye")
+								console.log('-------')
+							}else{
+								sport();
+							}
+						})
+					}
+				})
+			}else if(res.list == "Flip the card"){
 
-				}else{
-					console.log("Goodbye")
-				};
+				console.log('-------')
+				console.log(sports.cards[counter].answer);
+				console.log('-------')
+				inquirer.prompt([
+					{
+						name: "list",
+						type: "list",
+						choices:["Next Card", "Exit"],
+						message:'Would you like to...'
+					}
+				]).then(function(res){
+					if (res.list == 'Exit'){
+						console.log("Goodbye")
+					}else{
+						sport();
+					}
+				})
 
-				//			counter++
-			});
+			}else{
+				console.log("Goodbye")
+			};
 
 
-		}else{
-			console.log("You answered all the cards of this deck please choose another deck");
-			counter = 0
-			start()
-		}
-		console.log(counter + 'here');
-	};
+		});
+
+	}else{
+		console.log("You answered all the cards of this deck please choose another deck");
+		counter = 0
+		start()
+	}
+};
 
 
-	function history(){
-		if (counter < history.cards.length){
-			counter++
-			inquirer.prompt([
-				{
-					name: "list",
-					type: "list",
-					choices:["Answer the question", "Flip the card","Exit"],
-					message:'The Question is: ' + history.cards[counter].keyword + ' Would you like to...'
-				}
-			]).then(function(res){
-				console.log(counter);
-				if (res.list == "Answer the question"){
-					inquirer.prompt([
-						{
-							name: "answer",
-							type: "input",
-							message:'Please type in your answer'
-						}
-					]).then(function(res){
 
-						var a = res.answer.toString().toLowerCase();
+//function to handle the second deck and it's choices
 
-						if(a === history.cards[counter].answer){	
+function historyFun(){
+	counter++
 
-							console.log('-------')
-							console.log("That's right!!");
-							result++
-							console.log('The result: ' + result);
-							console.log('-------');
-							setTimeout(history, 1000);
+	if (counter < history.cards.length){
+		inquirer.prompt([
+			{
+				name: "list",
+				type: "list",
+				choices:["Answer the question", "Flip the card","Exit"],
+				message:'The Question is: ' + history.cards[counter].keyword + ' Would you like to...'
+			}
+		]).then(function(res){
+			if (res.list == "Answer the question"){
+				inquirer.prompt([
+					{
+						name: "answer",
+						type: "input",
+						message:'Please type in your answer'
+					}
+				]).then(function(res){
 
-						}else{
-							inquirer.prompt([
-								{
-									name: "list",
-									type: "list",
-									choices:["Next Card", "Exit"],
-									message:'The answer was ' + history.cards[counter].answer + ' Would you like to...'
+					var a = res.answer.toString().toLowerCase();
 
-								}
-							]).then(function(res){
-								if (res.answer == 'Exit'){
-									console.log('-------')
-									console.log("Goodbye")
-									console.log('-------')
-								}else{
-									history();
-								}
-							})
-						}
-					})
-				}else if(res.list == "Flip the card"){
+					if(a === history.cards[counter].answer){	
 
-					console.log('-------')
-					console.log(history.cards[counter].answer);
-					console.log('-------')
-					inquirer.prompt([
-						{
-							name: "list",
-							type: "list",
-							choices:["Next Card", "Exit"],
-							message:'The Question is: ' + history.cards[counter].keyword + ' Would you like to...'
-						}
-					]).then(function(res){
-						if (res.answer == 'Exit'){
-							console.log("Goodbye")
-						}else{
-							history();
-						}
-					})
+						console.log('-------')
+						console.log("That's right!!");
+						result++
+						console.log('The result: ' + result);
+						console.log('-------');
+						setTimeout(historyFun, 1000);
 
-				}else{
-					console.log("Goodbye")
-				};
+					}else{
+						inquirer.prompt([
+							{
+								name: "list",
+								type: "list",
+								choices:["Next Card", "Exit"],
+								message:'The answer was ' + history.cards[counter].answer + ' Would you like to...'
 
-				//			counter++
-			});
+							}
+						]).then(function(res){
+							if (res.answer == 'Exit'){
+								console.log('-------')
+								console.log("Goodbye")
+								console.log('-------')
+							}else{
+								historyFun();
+							}
+						})
+					}
+				})
+			}else if(res.list == "Flip the card"){
+
+				console.log('-------')
+				console.log(history.cards[counter].answer);
+				console.log('-------')
+				inquirer.prompt([
+					{
+						name: "list",
+						type: "list",
+						choices:["Next Card", "Exit"],
+						message:'Would you like to...'
+					}
+				]).then(function(res){
+					if (res.list == 'Exit'){
+						console.log("Goodbye")
+					}else{
+						historyFun();
+					}
+				})
+
+			}else{
+				console.log("Goodbye")
+			};
 
 
-		}else{
-			console.log("You answered all the cards of this deck please choose another deck");
-			counter = 0
-			start()
-		}
-		console.log(counter + 'here');
-	};
+		});
 
-	start()
+	}else{
+		console.log("You answered all the cards of this deck please choose another deck");
+		counter = 0
+		start()
+	}
+};
+
+
+start();
